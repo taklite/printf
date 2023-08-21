@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <stdio.h>
 
-
+int oo_fputs(const char *str, FILE *stream);
+int oo_putchar(char c);
+int _printf(const char *format, ...);
 
 #endif
