@@ -7,7 +7,6 @@
  * @format: String with format specifiers.
  * Return: Number of characters printed (bytes).
  */
-
 int _printf(const char *format, ...)
 {
 	unsigned int i, bytes = 0;
@@ -27,7 +26,13 @@ int _printf(const char *format, ...)
 			else if (format[i] == '%')
 				bytes += oo_putchar('%');
 			else if (format[i] == 'd' || format[i] == 'i')
-				bytes += printf("%d", va_arg(list, int));
+			{
+				int printed_chars = printf("%d", va_arg(list, int));
+				if (printed_chars > 0)
+				{
+					bytes += printed_chars;
+				}
+			}
 		}
 		else
 			bytes += oo_putchar(format[i]);
