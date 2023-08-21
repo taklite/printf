@@ -1,53 +1,36 @@
-#include "main.h"
 #include <stdarg.h>
 #include <stdio.h>
 
-
 /**
- * _printf - prints output according to a format.
- *
- * @format: string that has format specifiers.
- * @Return: number of characters printed (bytes)
+ * _printf - Prints output according to a format.
+ * @format: String with format specifiers.
+ * Return: Number of characters printed (bytes).
  */
 
 int _printf(const char *format, ...)
 {
 	unsigned int i, bytes = 0;
-	
 	va_list list;
+
 	va_start(list, format);
-	
-	for (i = 0; format[i] != '\0'; i++)
+
+	for (i = 0; format[i]; i++)
 	{
 		if (format[i] == '%')
 		{
 			i++;
 			if (format[i] == 'c')
-			{
-				char c = (char)va_arg(list, int);
-				bytes += oo_putchar(c);
-			}
+				bytes += oo_putchar((char)va_arg(list, int));
 			else if (format[i] == 's')
-			{
-				const char *string = va_arg(list, const char *);
-				bytes += oo_fputs(string, stdout);
-			}
+				bytes += oo_fputs((va_arg(list, const char *)), stdout);
 			else if (format[i] == '%')
-			{
 				bytes += oo_putchar('%');
-			}
 			else if (format[i] == 'd' || format[i] == 'i')
-			{
-				int number = va_arg(list, int);
-				bytes += printf("%d", number);
-			}
+				bytes += printf("%d", va_arg(list, int));
 		}
 		else
-		{
 			bytes += oo_putchar(format[i]);
-		}
 	}
-	
 	va_end(list);
 	return (bytes);
 }
