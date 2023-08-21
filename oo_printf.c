@@ -23,7 +23,7 @@ int _printf(const char *format, ...)
 			if (format[i] == 'c')
 				bytes += oo_putchar((char)va_arg(list, int));
 			else if (format[i] == 's')
-				bytes += oo_fputs((va_arg(list, const char *)), stdout);
+				bytes += oo_fputs(va_arg(list, const char *), stdout);
 			else if (format[i] == '%')
 				bytes += oo_putchar('%');
 			else if (format[i] == 'd' || format[i] == 'i')

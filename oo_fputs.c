@@ -1,3 +1,4 @@
+#include "main.h"
 #include <stdio.h>
 
 /**
@@ -10,19 +11,20 @@
  */
 int oo_fputs(const char *str, FILE *stream)
 {
-	if (str == NULL || stream == NULL)
-		return (EOF); /* Return EOF on error */
-
 	int charCount = 0;
+
+	if (str == NULL || stream == NULL)
+		return (EOF);
+
 
 	while (*str != '\0')
 	{
 		if (fputc(*str, stream) == EOF)
-			return (EOF); /* Return EOF if an error occurs during writing */
+			return (EOF);
 
 		charCount++;
 		str++;
 	}
 
-	return (charCount); /* Return the number of characters written */
+	return (charCount);
 }
