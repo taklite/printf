@@ -19,22 +19,22 @@ int _printf(const char *format, ...)
 	for (pointer = format; *pointer; ++pointer)
 	{
 		if (*pointer != '%')
-			oo_putchar(*pointer), ++bytes;
+			_putchar(*pointer), ++bytes;
 		else
 		{
 			++pointer;
 			if (*pointer == '\0')
 				break;
 			if (*pointer == 'c')
-				oo_putchar(va_arg(vars, int)), ++bytes;
+				_putchar(va_arg(vars, int)), ++bytes;
 			else if (*pointer == 's')
 				bytes += printf("%s", va_arg(vars, char *));
 			else if (*pointer == '%')
-				oo_putchar('%'), ++bytes;
+				_putchar('%'), ++bytes;
 			else if (*pointer == 'd' || *pointer == 'i')
 				bytes += printf("%d", va_arg(vars, int));
 			else
-				oo_putchar('%'), putchar(*pointer), bytes += 2;
+				_putchar('%'), putchar(*pointer), bytes += 2;
 		}
 	}
 
