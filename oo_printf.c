@@ -9,34 +9,34 @@
  */
 int _printf(const char *format, ...)
 {
-	unsigned int i, bytes = 0;
-	va_list list;
+	va_list vars;
+	int bytes = 0;
+	const char *pointer;
 
-	va_start(list, format);
+	va_start(vars, format);
 
-	for (i = 0; format[i]; i++)
+	for (pointer = format; *pointer; ++pointer)
 	{
-		if (format[i] == '%')
-		{
-			i++;
-			if (format[i] == 'c')
-				bytes += oo_putchar((char)va_arg(list, int));
-			else if (format[i] == 's')
-				bytes += oo_fputs(va_arg(list, const char *), stdout);
-			else if (format[i] == '%')
-				bytes += oo_putchar('%');
-			else if (format[i] == 'd' || format[i] == 'i')
-			{
-				int printed_chars = printf("%d", va_arg(list, int));
-				if (printed_chars > 0)
-				{
-					bytes += printed_chars;
-				}
-			}
-		}
+		if (*pointer != '%')
+			oo_putchar(*pointer), ++bytes;
 		else
-			bytes += oo_putchar(format[i]);
+		{
+			++pointer;
+			if (*pointer == '\0')
+				break;
+			if (*pointer == 'c')
+				oo_putchar(va_arg(vars, int)), ++bytes;
+			else if (*pointer == 's')
+				bytes += printf("%s", va_arg(vars, char *));
+			else if (*pointer == '%')
+				oo_putchar('%'), ++bytes;
+			else if (*pointer == 'd' || *pointer == 'i')
+				bytes += printf("%d", va_arg(vars, int));
+			else
+				oo_putchar('%'), putchar(*pointer), bytes += 2;
+		}
 	}
-	va_end(list);
+
+	va_end(vars);
 	return (bytes);
 }
