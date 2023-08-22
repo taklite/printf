@@ -34,7 +34,7 @@ int _printf(const char *format, ...)
 			else if (*pointer == 'd' || *pointer == 'i')
 				bytes += printf("%d", va_arg(vars, int));
 			else
-				_putchar('%'), putchar(*pointer), bytes += 2;
+				_putchar('%'), _putchar(*pointer), bytes += 2;
 		}
 	}
 
