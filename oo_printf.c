@@ -33,6 +33,8 @@ int _printf(const char *format, ...)
 				_putchar('%'), ++bytes;
 			else if (*pointer == 'd' || *pointer == 'i')
 				bytes += printf("%d", va_arg(vars, int));
+			else if (*pointer == 'r')
+				bytes += printf("[%s]", va_arg(vars, char *));
 			else
 				_putchar('%'), _putchar(*pointer), bytes += 2;
 		}
