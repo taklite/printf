@@ -2,13 +2,15 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <limits.h>
 
 /**
- * _printf - Prints output according to a format.
+ * _printf - writes output according to a format.
  * @format: String with format specifiers.
  * @...: Set of arguments for format.
  * Return: Number of characters printed (bytes).
  */
+
 int _printf(const char *format, ...)
 {
 	va_list vars;
@@ -29,18 +31,14 @@ int _printf(const char *format, ...)
 			if (*pointer == 'c')
 				_putchar(va_arg(vars, int)), ++bytes;
 			else if (*pointer == 's')
-				bytes += printf("%s", va_arg(vars, char *));
+				while (*(char *)(va_arg(vars, char *)))
+					_putchar(*((char *)(va_arg(vars, char *)) + bytes++));
 			else if (*pointer == '%')
 				_putchar('%'), ++bytes;
-			else if (*pointer == 'd' || *pointer == 'i')
-				bytes += printf("%d", va_arg(vars, int));
-			else if (*pointer == 'r')
-				bytes += printf("[%s]", va_arg(vars, char *));
-			else
-				_putchar('%'), _putchar(*pointer), bytes += 2;
 		}
 	}
 
 	va_end(vars);
+
 	return (bytes);
 }
